@@ -58,4 +58,4 @@ call::
 
 This maps to::
 
-    ampClient.callRemote(Transmogrify, volume=11)
+    ampClient.callRemote(Command, x=1)
