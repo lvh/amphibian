@@ -33,15 +33,10 @@
             <p>amphibian supports <a href="http://www.jsonrpc.org/specification">JSON-RPC 2.0</a> encoded as <a href="http://cr.yp.to/proto/netstrings.txt">netstrings</a> (the standard for <a href="http://www.jsonrpc.org/specification">JSON-RPC 2.0</a> over TCP) over anything you can specify as an endpoint, and, more importantly, <a href="http://www.jsonrpc.org/specification">JSON-RPC 2.0</a> encoded as <a href="http://cr.yp.to/proto/netstrings.txt">netstrings</a> over <a href="http://www.websocket.org">WebSockets</a>.</p>
             <h1 id="differences">Differences</h1>
             <p>The main difference is that JSON-RPC takes positional arguments whereas AMP generally takes named keyword arguments (with the exception of protocol switching). To fix this, amphibian requires the JSON-RPC parameters array to consist of a single JSON object that has the keyword arguments for the AMP call:</p>
-            <pre><code>{
-              jsonrpc: &quot;2.0&quot;,
-              method: &quot;Transmogrify&quot;,
-              params: [{withFluxCapacitor: true, volume: 11}],
-              identifier: 1
-            }
+            <pre><code>{jsonrpc: &quot;2.0&quot;, method: &quot;Transmogrify&quot;, params: [{volume: 11}]}
             </code></pre>
             <p>This maps to:</p>
-            <pre><code>ampClient.callRemote(Transmogrify, withFluxCapacitor=True, volume=11)
+            <pre><code>ampClient.callRemote(Transmogrify, volume=11)
             </code></pre>
         </section>
 
