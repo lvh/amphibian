@@ -22,8 +22,27 @@
 
         
         <section id="body">
-            <p>amphibian is a two-way server side <a href="http://json-rpc.org/">JSONRRPC</a> to <a href="http://amp-protocol.net/">AMP</a> bridge for browsers.</p>
+            <p>amphibian is <a href="http://json-rpc.org/">JSON-RPC</a> to <a href="http://amp-protocol.net/">AMP</a> bridge.</p>
             <img src="http://project-logos.lvh.cc/amphibian.png" alt="image" />
+            <h1 id="why">Why?</h1>
+            <p><a href="http://amp-protocol.net/">AMP</a> is an awesome protocol, but it’s inherently binary. While binary support in browsers is improving (<a href="https://developer.mozilla.org/en/JavaScript_typed_arrays">ArrayBuffer</a> and <a href="http://www.w3.org/TR/FileAPI/#dfn-Blob">Blob</a>), they’re still nowhere near widely supported and using them for anything other than their immediate use case (WebGL and the File API, respectively) is incredibly annoying.</p>
+            <p>Bottom line: anything you send across the WebSocket wire better be 7-bit safe.</p>
+            <p>Although base64 seems like the obvious solution, you still lack the tools to parse and produce those AMP boxes.</p>
+            <p>At the same time, browsers everywhere speak <a href="http://www.json.org/">JSON</a>, and usually pretty efficiently, too. JSON has a de facto RPC protocol called <a href="http://json-rpc.org/">JSON-RPC</a> which is very similar in many ways to <a href="http://amp-protocol.net/">AMP</a>. Hence, it made sense to attempt to proxy them.</p>
+            <h1 id="how-it-works">How it works</h1>
+            <p>amphibian supports <a href="http://www.jsonrpc.org/specification">JSON-RPC 2.0</a> encoded as <a href="http://cr.yp.to/proto/netstrings.txt">netstrings</a> (the standard for <a href="http://www.jsonrpc.org/specification">JSON-RPC 2.0</a> over TCP) over anything you can specify as an endpoint, and, more importantly, <a href="http://www.jsonrpc.org/specification">JSON-RPC 2.0</a> encoded as <a href="http://cr.yp.to/proto/netstrings.txt">netstrings</a> over <a href="http://www.websocket.org">WebSockets</a>.</p>
+            <h1 id="differences">Differences</h1>
+            <p>The main difference is that JSON-RPC takes positional arguments whereas AMP generally takes named keyword arguments (with the exception of protocol switching). To fix this, amphibian requires the JSON-RPC parameters array to consist of a single JSON object that has the keyword arguments for the AMP call:</p>
+            <pre><code>{
+              jsonrpc: &quot;2.0&quot;,
+              method: &quot;Transmogrify&quot;,
+              params: [{withFluxCapacitor: true, volume: 11}],
+              identifier: 1
+            }
+            </code></pre>
+            <p>This maps to:</p>
+            <pre><code>ampClient.callRemote(Transmogrify, withFluxCapacitor=True, volume=11)
+            </code></pre>
         </section>
 
         <footer>
