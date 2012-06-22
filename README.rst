@@ -53,13 +53,8 @@ switching). To fix this, amphibian requires the JSON-RPC parameters array to
 consist of a single JSON object that has the keyword arguments for the AMP
 call::
 
-    {
-      jsonrpc: "2.0",
-      method: "Transmogrify",
-      params: [{withFluxCapacitor: true, volume: 11}],
-      identifier: 1
-    }
+    {jsonrpc: "2.0", method: "Transmogrify", params: [{volume: 11}]}
 
 This maps to::
 
-    ampClient.callRemote(Transmogrify, withFluxCapacitor=True, volume=11)
+    ampClient.callRemote(Transmogrify, volume=11)
