@@ -59,3 +59,4 @@ call::
 This maps to::
 
     ampClient.callRemote(Command, x=1)
+
