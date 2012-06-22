@@ -2,8 +2,9 @@
  amphibian
 ===========
 
-amphibian is `JSON-RPC`_ to AMP_ bridge.
+amphibian_ is `JSON-RPC`_ to AMP_ bridge.
 
+.. _amphibian: https://github.com/lvh/amphibian
 .. _`JSON-RPC`: http://json-rpc.org/
 .. _AMP: http://amp-protocol.net/
 
