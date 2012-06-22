@@ -54,7 +54,7 @@ switching). To fix this, amphibian requires the JSON-RPC parameters array to
 consist of a single JSON object that has the keyword arguments for the AMP
 call::
 
-    {jsonrpc: "2.0", method: "Transmogrify", params: [{volume: 11}]}
+    {jsonrpc: "2.0", method: "Command", params: [{x: 1}]}
 
 This maps to::
 
