@@ -1,10 +1,20 @@
 import os
 
 from twisted.application import service
-from twisted.internet import endpoints
+from twisted.internet import endpoints, protocol
 from twisted.protocols import amp
 
 from amphibian import netstring, websocket
+
+
+
+class _AMPClientFactory(protocol.Factory):
+    protocol = amp.AMP
+
+
+
+_ampClientFactory = _AMPClientFactory()
+
 
 
 class _Service(service.Service):
@@ -21,7 +31,7 @@ class _Service(service.Service):
         Starts the websocket factory.
         """
         def clientFactory():
-            return self.ampEndpoint.connect(amp.AMP)
+            return self.ampTargetEndpoint.connect(_ampClientFactory)
 
         factory = self.factory(clientFactory)
         return self.listeningEndpoint.listen(factory)
