@@ -42,10 +42,10 @@ class ResponseEncodingTests(_JSONRPCAssertions):
 
 
 
-VERSION = "jsonrpc", "2.0"
-METHOD = "method", "Transmogrify"
-PARAMS = "params", [{}]
-IDENTIFIER = "id", 1
+VERSION = u"jsonrpc", u"2.0"
+METHOD = u"method", u"Transmogrify"
+PARAMS = u"params", [{}]
+IDENTIFIER = u"id", 1
 
 
 class RequestHandlingTests(_JSONRPCAssertions):
@@ -53,7 +53,9 @@ class RequestHandlingTests(_JSONRPCAssertions):
         self.write = mock.Mock()
         self.client = mock.Mock()
     
-        def fakeCallRemoteString(method, requiresAnswer=True, **kwargs):
+        def fakeCallRemoteString(methodName, requiresAnswer=True, **kwargs):
+            self.assertIdentical(methodName.__class__, str)
+
             if requiresAnswer:
                 return defer.succeed({"transmogrified": True})
             else:

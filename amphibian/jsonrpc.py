@@ -65,7 +65,8 @@ def _extractDetails(request):
     try:
         if request["jsonrpc"] != "2.0":
             raise InvalidRequestError
-        method, identifier = request["method"], request.get("id")
+        method = request["method"].encode("utf-8")
+        identifier = request.get("id")
         kwargs, = request["params"]
     except KeyError:
         raise InvalidRequestError()
