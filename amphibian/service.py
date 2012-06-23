@@ -42,7 +42,7 @@ class _Service(service.Service):
 
 
 
-class WebSocketService(service.Service):
+class WebSocketService(_Service):
     """
     Service that proxies netstring-encoded JSON-RPC requests over WebSockets
     to AMP.
@@ -52,7 +52,7 @@ class WebSocketService(service.Service):
 
 
 
-class NetstringService(service.Service):
+class NetstringService(_Service):
     """
     Service that proxies netstring-encoded JSON-RPC calls over TCP to AMP.
     """
