@@ -36,7 +36,7 @@ def handleRequest(string, client, write):
         request = _parseRequest(string)
         method, identifier, kwargs = _extractDetails(request)
         requiresAnswer = identifier is not None
-        d = _callRemote(client, method, kwargs, requiresAnswer)
+        d = _callRemote(client, method, requiresAnswer, kwargs)
     except Exception as e:
         d = defer.fail(e)
 
@@ -67,7 +67,9 @@ def _extractDetails(request):
             raise InvalidRequestError
         method = request["method"].encode("utf-8")
         identifier = request.get("id")
+
         kwargs, = request["params"]
+        kwargs = dict((k.encode("utf-8"), v) for k, v in kwargs.items())
     except KeyError:
         raise InvalidRequestError()
     except ValueError:
@@ -76,7 +78,7 @@ def _extractDetails(request):
     return method, identifier, kwargs
 
 
-def _callRemote(client, method, kwargs, requiresAnswer):
+def _callRemote(client, method, requiresAnswer, kwargs):
     """
     Calls the remote method by name.
     """
