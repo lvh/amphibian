@@ -36,7 +36,7 @@ def handleRequest(string, client, write):
         request = _parseRequest(string)
         method, identifier, kwargs = _extractDetails(request)
         requiresAnswer = identifier is not None
-        d = _callRemote(client, method, requiresAnswer, kwargs)
+        d = client.callRemoteString(method, requiresAnswer, **kwargs)
     except Exception as e:
         d = defer.fail(e)
 
@@ -76,17 +76,6 @@ def _extractDetails(request):
         raise BadParametersError()
 
     return method, identifier, kwargs
-
-
-def _callRemote(client, method, requiresAnswer, kwargs):
-    """
-    Calls the remote method by name.
-    """
-    try:
-        return client.callRemoteString(method, requiresAnswer, **kwargs)
-    except TypeError: # **kwargs failed, kwargs not a mapping
-        raise BadParametersError()
-
 
 
 def encode(result, identifier=None):
