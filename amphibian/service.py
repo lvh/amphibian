@@ -9,7 +9,7 @@ from amphibian import netstring, websocket
 
 class _Service(service.Service):
     prefix = "AMPHIBIAN"
-    serviceName, factory = None
+    serviceName = factory = None
 
     def __init__(self, listeningEndpoint, ampTargetEndpoint):
         self.listeningEndpoint = listeningEndpoint
