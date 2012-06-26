@@ -7,6 +7,8 @@ import json
 from twisted.internet import defer
 from twisted.python import failure, log
 
+from amphibian import ampencode
+
 
 class ParseError(Exception):
     code = -32700
@@ -35,8 +37,9 @@ def handleRequest(string, client, write):
     try:
         request = _parseRequest(string)
         method, identifier, kwargs = _extractDetails(request)
+        boxKwargs = ampencode.toBoxKwargs(kwargs)
         requiresAnswer = identifier is not None
-        d = client.callRemoteString(method, requiresAnswer, **kwargs)
+        d = client.callRemoteString(method, requiresAnswer, **boxKwargs)
     except Exception as e:
         d = defer.fail(e)
 
