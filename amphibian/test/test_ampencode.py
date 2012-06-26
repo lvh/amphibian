@@ -40,5 +40,3 @@ class AMPEncodeTests(unittest.TestCase):
     def test_listOfUnicode(self):
         ts = list(u"abcdef")
         self._test_encode([(ts, amp.ListOf(amp.Unicode()))])
-
-
